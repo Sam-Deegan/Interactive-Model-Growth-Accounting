@@ -709,7 +709,7 @@ B_03_13_ireland_df <- data.frame(
 ###### B_03_14: Version ########################################################
 # Note: Semantic version, shown in the footer; CHANGELOG.md has the history.
 
-B_03_14_version_chr <- "1.0.6"
+B_03_14_version_chr <- "1.0.7"
 
 ###### B_03_15: Source Repository ##############################################
 # Note: The GitHub repo, linked from the footer.
@@ -1848,34 +1848,29 @@ F_01_01_app_server_fn <- function(input, output, session) {
       class = "narrative",
       tags$div(class = "nar-head", "The Identity, on Ireland's Own Numbers"),
       tags$p(HTML(paste(
-        "Everything below is the CSO's, decomposed by the identity from the",
-        "equations panel. You still choose the capital share, because that",
-        "is the assumption the whole exercise turns on and no dataset can",
-        "settle it for you. Move it and a faded copy of each line stays",
-        "behind at the share you started from, so the cost of the",
-        "assumption is on screen rather than in your memory."
+        "Everything below is CSO data, decomposed by the identity in the",
+        "equations panel. The capital share is still yours to set, because",
+        "no dataset settles it. Move it and a faded copy of each line stays",
+        "at the share you started from."
       ))),
       tags$p(HTML(paste0(
-        "<strong>Start with this.</strong> Over ", w[1], " to ", w[2],
-        " Irish GDP grew <strong>", T_02_06_pct_fn(k$gdp$g_y, 1),
-        "</strong> a year, of which <strong>",
-        T_02_06_pct_fn(k$gdp$residual, 1), "</strong> is residual &mdash; ",
+        "Over ", w[1], " to ", w[2], " Irish GDP grew ",
+        T_02_06_pct_fn(k$gdp$g_y, 1), " a year, of which ",
+        T_02_06_pct_fn(k$gdp$residual, 1), " is residual",
         if (is.na(k$gdp$share)) "" else
-          paste0("about ", round(abs(k$gdp$share) * 100),
-                 "% of all measured growth "),
-        "attributed to technology. Now switch the measure to GNI*: growth ",
-        "falls to <strong>", T_02_06_pct_fn(k$gni$g_y, 1),
-        "</strong> a year and the residual to <strong>",
-        T_02_06_pct_fn(k$gni$residual, 1), "</strong>. Capital and ",
-        "employment account for almost all of it."
+          paste0(", about ", round(abs(k$gdp$share) * 100),
+                 "% of measured growth"),
+        ", attributed to technology. On GNI* growth is ",
+        T_02_06_pct_fn(k$gni$g_y, 1), " a year and the residual ",
+        T_02_06_pct_fn(k$gni$residual, 1), ". Capital and employment ",
+        "account for almost all of it."
       ))),
       tags$p(HTML(paste(
-        "Nothing was revised between those two sentences. One economy, one",
-        "identity, one capital share, two output series &mdash; and a",
-        "productivity story that exists in one of them and not the other.",
-        "Whether Ireland has had a productivity miracle is, on these",
-        "numbers, a question about which line of the national accounts you",
-        "read."
+        "Nothing was revised between those two sentences. Same economy,",
+        "same identity, same capital share; a different output series, and",
+        "the productivity story is in one and not the other. Whether",
+        "Ireland has had a productivity miracle depends on which line of",
+        "the national accounts you read."
       )))
     )
   })
@@ -1935,19 +1930,18 @@ F_01_01_app_server_fn <- function(input, output, session) {
       class = "narrative",
       tags$div(class = "nar-head", "2015, and What an Identity Cannot See"),
       tags$p(HTML(paste0(
-        "In 2015 measured ", irl_lab(), " grew <strong>",
-        T_02_06_pct_fn(r$g_y, 1), "</strong> and the net capital stock grew ",
-        "<strong>", T_02_06_pct_fn(r$g_k, 1), "</strong>. Both moved for the ",
-        "same reason: multinationals relocated intellectual property and ",
-        "aircraft-leasing balance sheets into the Irish accounts. No factory ",
-        "was built and nobody's job changed. The identity cannot tell a ",
-        "relocated balance sheet from a new machine, because it never sees ",
-        "either &mdash; it sees a capital series and an output series."
+        "In 2015 measured ", irl_lab(), " grew ",
+        T_02_06_pct_fn(r$g_y, 1), " and the net capital stock grew ",
+        T_02_06_pct_fn(r$g_k, 1), ", both because multinationals moved ",
+        "intellectual property and aircraft-leasing balance sheets into ",
+        "the Irish accounts. No factory was built and no job changed. The ",
+        "identity sees only a capital series and an output series, so it ",
+        "cannot tell a relocated balance sheet from a new machine."
       ))),
       tags$p(HTML(paste0(
-        "Switch the measure to GNI*, which strips out the depreciation and ",
-        "profits of foreign-owned capital, and 2015 stops being remarkable. ",
-        "That is the whole argument for GNI* in one slider."
+        "On GNI*, which strips out the depreciation and profits of ",
+        "foreign-owned capital, 2015 is unremarkable. That is the case for ",
+        "GNI* in one slider."
       )))
     )
   })
@@ -1974,36 +1968,28 @@ F_01_01_app_server_fn <- function(input, output, session) {
       class = "narrative",
       tags$div(class = "nar-head", "Where Every Number Comes From"),
       tags$p(HTML(paste(
-        "<strong>Output.</strong> Gross domestic product and gross national",
-        "product at constant market prices, CSO table NA006. Modified gross",
-        "national income (GNI*) at constant market prices, CSO table NA002.",
-        "Both from 1995."
+        "Output is GDP and GNP at constant market prices, CSO table NA006,",
+        "and modified gross national income (GNI*) at constant market",
+        "prices, CSO table NA002, both from 1995. Capital is the net stock",
+        "of fixed assets at constant prices, all assets and all NACE",
+        "sectors, CSO table CSA02, from 1985. Labour is persons aged 15 and",
+        "over in employment, averaged over the four quarters, CSO table",
+        "QLF01, from 1998."
       ))),
       tags$p(HTML(paste(
-        "<strong>Capital.</strong> Net capital stock of fixed assets at",
-        "constant prices, all fixed assets, all NACE sectors, CSO table",
-        "CSA02, from 1985. The stock, not capital services: the CSO's own",
-        "productivity accounts use services, which is one reason the two",
+        "The CSO's own productivity accounts, table PIA09, 2000 to 2019,",
+        "give multifactor productivity, labour and capital input and the",
+        "GVA factor shares, for the whole economy and for its foreign- and",
+        "domestic-dominated halves. They use capital services and hours;",
+        "this app uses the capital stock and heads, which is why the two",
         "residuals differ."
       ))),
-      tags$p(HTML(paste(
-        "<strong>Labour.</strong> Persons aged 15 and over in employment,",
-        "the mean of the four quarters, CSO table QLF01, from 1998. Heads,",
-        "not hours, which is the other reason."
-      ))),
-      tags$p(HTML(paste(
-        "<strong>The CSO's own accounts.</strong> Multifactor productivity,",
-        "labour and capital input, and the GVA capital and labour shares,",
-        "CSO table PIA09, 2000 to 2019, for the whole economy and for the",
-        "foreign- and domestic-dominated halves of it."
-      ))),
       tags$p(class = "nar-source", HTML(paste(
-        "All series read from the CSO's PxStat API and shipped with the app,",
+        "All series come from the CSO's PxStat API and ship with the app,",
         "so nothing here depends on being online. Growth rates are log",
         "differences. Chain-linked volume series are revised between",
-        "vintages: the CSO has published more than one figure for the same",
-        "year across successive releases, which is worth a minute of class",
-        "on its own."
+        "vintages, so the CSO has published more than one figure for the",
+        "same year."
       )))
     )
   })
@@ -2011,15 +1997,14 @@ F_01_01_app_server_fn <- function(input, output, session) {
   output$decades_note <- renderUI({
     tags$div(
       class = "narrative",
-      tags$div(class = "nar-head", "What Is Behind the Decade Figure"),
+      tags$div(class = "nar-head", "Behind the Decade Figure"),
       tags$p(HTML(paste(
         "The three series are the Penn World Table's, because no Irish",
         "source carries all three back that far. The CSO's constant-price",
-        "GDP and GNP run from <strong>1970</strong>, its net capital stock",
-        "from <strong>1985</strong>, and employment on the ILO definition",
-        "from <strong>1998</strong>. Before those dates the numbers here are",
-        "not Irish official statistics, and the 2010s bar is dominated by",
-        "2015 alone."
+        "GDP and GNP run from 1970, its net capital stock from 1985 and",
+        "employment on the ILO definition from 1998, so before those dates",
+        "the numbers here are not Irish official statistics. The 2010s bar",
+        "is dominated by 2015 alone."
       ))),
       tags$p(class = "nar-source", HTML(paste(
         "Sources: Penn World Table 10.01 (rgdpna, rnna, emp), Ireland,",
@@ -2028,10 +2013,9 @@ F_01_01_app_server_fn <- function(input, output, session) {
         "1970&ndash;1995</em>,",
         "<em>Estimates of the Capital Stock of Fixed Assets</em> (CSA02,",
         "1985&ndash;) and the <em>Labour Force Survey</em>",
-        "(QLF01, 1998&ndash;).",
-        "The capital share is yours to set: the Penn World Table's Irish",
-        "labour share is one imputed figure repeated for every year before",
-        "1996, so it is not used here."
+        "(QLF01, 1998&ndash;). The capital share is yours to set: the Penn",
+        "World Table's Irish labour share is one imputed figure repeated",
+        "for every year before 1996, so it is not used here."
       )))
     )
   })
@@ -2065,28 +2049,22 @@ F_01_01_app_server_fn <- function(input, output, session) {
     req(stage_num() >= 3)
     tags$div(
       class = "narrative",
-      tags$div(class = "nar-head", "What Is Actually in the Residual"),
+      tags$div(class = "nar-head", "What Is in the Residual"),
       tags$p(HTML(paste(
-        "<strong>Technology, and everything else.</strong> The residual is",
-        "not measured; it is inferred as whatever makes the identity hold.",
-        "So it contains technical progress, and also unmeasured capital",
-        "utilisation, changes in the quality of capital and labour that the",
-        "input series miss, economies of scale, and the reallocation of",
-        "workers from low- to high-productivity uses."
+        "The residual is not measured. It is whatever makes the identity",
+        "hold, so it contains technical progress along with unmeasured",
+        "capital utilisation, quality changes in capital and labour that",
+        "the input series miss, economies of scale and the reallocation of",
+        "workers to more productive uses. Abramovitz called it the measure",
+        "of our ignorance, and the name has stuck because it is accurate."
       ))),
       tags$p(HTML(paste(
-        "<strong>Which is why the East Asian debate mattered.</strong> If",
-        "rapid growth is mostly accumulation it must slow down, because",
-        "capital has diminishing returns. If it is mostly residual it need",
-        "not. The accounting cannot settle which, because the answer depends",
-        "on the capital share and the capital series, both of which are",
-        "contested."
-      ))),
-      tags$p(HTML(paste(
-        "<strong>The honest summary.</strong> Growth accounting is a way of",
-        "organising the question, not of answering it. Abramovitz called the",
-        "residual the measure of our ignorance, and the name has stuck",
-        "because it is accurate."
+        "This is why the East Asian debate mattered. Growth that is mostly",
+        "accumulation must slow, because capital has diminishing returns;",
+        "growth that is mostly residual need not. The accounting cannot",
+        "settle which, because the answer turns on the capital share and",
+        "the capital series, and both are contested. Growth accounting",
+        "organises the question rather than answering it."
       )))
     )
   })
@@ -2100,38 +2078,34 @@ F_01_01_app_server_fn <- function(input, output, session) {
       class = "narrative",
       tags$div(class = "nar-head", "Where These Numbers Come From"),
       tags$p(HTML(paste(
-        "<strong>2015.</strong> Real GDP grew <strong>24.6%</strong> and the",
-        "net capital stock at constant prices <strong>24.7%</strong>, the",
-        "two moving together because they moved for the same reason.",
-        "Employment rose <strong>3.4%</strong>. Real GNI*, which excludes",
-        "the depreciation and profits of relocated foreign capital, grew",
-        "<strong>1.8%</strong>. The first estimate of 2015 GDP growth,",
-        "published in July 2016, was <strong>26.3%</strong>."
+        "In 2015 real GDP grew 24.6% and the net capital stock at constant",
+        "prices 24.7%, together and for the same reason. Employment rose",
+        "3.4%. Real GNI*, which excludes the depreciation and profits of",
+        "relocated foreign capital, grew 1.8%. The first estimate of 2015",
+        "GDP growth, published in July 2016, was 26.3%."
       ))),
       tags$p(HTML(paste(
-        "<strong>2023.</strong> Real GDP <strong>−3.3%</strong>, the net",
-        "capital stock flat, employment <strong>+3.4%</strong>, real GNI*",
-        "<strong>+6.1%</strong>. Switch the mode to Ireland's Accounts to",
-        "see every year on the same basis, and to put this app's residual",
-        "beside the CSO's own multifactor productivity measure."
+        "In 2023 real GDP fell 3.3%, the net capital stock was flat,",
+        "employment rose 3.4% and real GNI* rose 6.1%. The Ireland's",
+        "Accounts mode shows every year on the same basis, with this app's",
+        "residual beside the CSO's own multifactor productivity measure."
       ))),
       tags$p(HTML(paste(
-        "<strong>The capital share.</strong> The CSO puts the labour share",
-        "of gross value added at about <strong>32%</strong> for the total",
-        "economy in 2023, <strong>53.5%</strong> in the domestic sector and",
-        "<strong>10.2%</strong> in the foreign sector. The ESRI, working on",
-        "GNI*, recommends a labour share between <strong>0.5 and 0.6</strong>",
-        "for Irish macroeconomic modelling. So α is 0.68, 0.47 or 0.4 to 0.5",
-        "depending on which question you are asking."
+        "The CSO puts the labour share of gross value added in 2023 at",
+        "about 32% for the total economy, 53.5% in the domestic sector and",
+        "10.2% in the foreign sector. The ESRI, working on GNI*, recommends",
+        "a labour share of 0.5 to 0.6 for Irish macroeconomic modelling. So",
+        "&alpha; is 0.68, 0.47 or 0.4 to 0.5, depending on the question."
       ))),
       tags$p(class = "nar-source", HTML(paste(
         "Sources: CSO, <em>Annual National Accounts</em>;",
         "<em>Estimates of the Capital Stock of Fixed Assets</em>;",
-        "<em>Productivity in Ireland 2022–2023</em>;",
+        "<em>Productivity in Ireland 2022&ndash;2023</em>;",
         "<em>Labour Force Survey</em>. ESRI Research Note,",
         "<em>Estimating Ireland's Labour Share</em> (2024).",
         "Growth rates are revised between vintages: the CSO has published",
-        "−5.5%, −2.5% and −3.3% for 2023 GDP in three successive releases."
+        "&minus;5.5%, &minus;2.5% and &minus;3.3% for 2023 GDP in three",
+        "successive releases."
       )))
     )
   })
@@ -2142,38 +2116,31 @@ F_01_01_app_server_fn <- function(input, output, session) {
       class = "narrative",
       tags$div(class = "nar-head", "Proximate and Fundamental Causes"),
       tags$p(HTML(paste(
-        "<strong>The distinction.</strong> Capital, human capital and",
-        "productivity are PROXIMATE causes of income: they are the things",
-        "that immediately produce output, and the accounting above measures",
-        "them. But they are themselves outcomes. Asking why one country has",
-        "more of them than another is asking about FUNDAMENTAL causes, and",
-        "the usual candidates are institutions, geography and culture."
-      ))),
-      tags$p(HTML(paste(
-        "<strong>Why it is hard to test.</strong> Countries with good",
-        "institutions are rich, but rich countries can also afford good",
-        "institutions, and something else may cause both. A simple",
+        "Capital, human capital and productivity are proximate causes of",
+        "income: they produce output directly, and the accounting above",
+        "measures them. They are also outcomes. Asking why one country has",
+        "more of them than another is asking about fundamental causes,",
+        "usually institutions, geography and culture. Testing this is hard",
+        "because countries with good institutions are rich, rich countries",
+        "can afford good institutions, and something else may drive both; a",
         "regression of income on institutions cannot separate the three."
       ))),
       tags$p(HTML(paste(
-        "<strong>The colonial natural experiment.</strong> European",
-        "colonisation supplies a source of variation in institutions that is",
+        "European colonisation supplies variation in institutions that is",
         "plausibly unrelated to income today except through institutions.",
-        "Where the disease environment let Europeans settle in numbers, they",
+        "Where the disease environment let Europeans settle in numbers they",
         "built institutions that protected property, because they expected",
-        "to live under them. Where it did not, they built extractive ones",
-        "designed to move resources out. Those arrangements persisted",
-        "through independence, so the mortality rates faced by early settlers",
-        "predict the quality of institutions centuries later — and can be",
-        "used as an instrument for them."
+        "to live under them; where it did not they built extractive ones.",
+        "Those arrangements persisted through independence, so early",
+        "settler mortality predicts the quality of institutions centuries",
+        "later and can serve as an instrument for them."
       ))),
       tags$p(HTML(paste(
-        "<strong>The objection to hold in mind.</strong> The instrument is",
-        "only valid if settler mortality affects income today through",
-        "nothing but institutions. Disease environments also affect health,",
-        "agriculture and human capital directly, which is the main line of",
-        "attack on the result, along with the quality of the historical",
-        "mortality data themselves."
+        "The instrument is valid only if settler mortality affects income",
+        "today through nothing but institutions. Disease environments also",
+        "affect health, agriculture and human capital directly, which is",
+        "the main objection to the result, along with the quality of the",
+        "historical mortality data."
       )))
     )
   })
