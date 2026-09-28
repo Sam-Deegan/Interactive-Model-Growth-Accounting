@@ -709,7 +709,7 @@ B_03_13_ireland_df <- data.frame(
 ###### B_03_14: Version ########################################################
 # Note: Semantic version, shown in the footer; CHANGELOG.md has the history.
 
-B_03_14_version_chr <- "1.0.1"
+B_03_14_version_chr <- "1.0.2"
 
 ###### B_03_15: Source Repository ##############################################
 # Note: The GitHub repo, linked from the footer.
@@ -798,7 +798,6 @@ D_01_01_bars_fn <- function(df, total, title, caption, ylab, sym) {
       "Residual" = T_01_02_series_vec[["main"]]
     )) +
     labs(
-      title = paste0(title, ": ", T_02_06_pct_fn(total, 1), " a year"),
       x = NULL, y = ylab,
       caption = caption
     ) +
@@ -870,8 +869,6 @@ D_01_04_decades_fn <- function(par) {
     )) +
     scale_y_continuous(labels = function(v) T_02_06_pct_fn(v, 0)) +
     labs(
-      title = "Ireland's growth accounts by decade",
-      subtitle = paste0("At a capital share of ", T_02_05_num_fn(a, 2)),
       x = NULL,
       y = expression(bold("Average annual growth (" *
                             Delta * "ln" ~ Y * ")")),
@@ -922,9 +919,6 @@ D_02_01_sensitivity_fn <- function(par, ref = NULL) {
     T_02_02_mark_x_fn(par$alpha, expression(alpha)) +
     scale_y_continuous(labels = function(x) paste0(round(x * 100, 1), "%")) +
     labs(
-      title = paste0("The Solow residual against the capital share: at ",
-                     T_02_05_num_fn(par$alpha, 2), " it is ",
-                     T_02_06_pct_fn(res, 2)),
       x = expression(bold("Capital share (" * alpha * ")")),
       y = expression(bold("Residual growth per worker (" *
                             Delta * "ln" ~ A * ")")),
@@ -968,9 +962,6 @@ D_02_02_levels_fn <- function(par) {
       "Residual" = T_01_02_series_vec[["main"]]
     )) +
     labs(
-      title = paste0("Development accounting: income per worker is ",
-                     T_02_05_num_fn(par$y_rel, 2),
-                     " of the frontier's"),
       x = NULL,
       y = expression(bold("Contribution to the income gap (" *
                             log(y[i] / y[US]) * ")")),
@@ -1014,16 +1005,11 @@ D_03_01_absolute_fn <- function(par) {
              size = 3.2, hjust = 1,
              vjust = if (con$uncond_slope < 0) 1.4 else -0.7,
              colour = T_01_01_palette_vec[["muted"]],
-             fill = T_01_01_palette_vec[["wash"]], label.size = 0,
+             fill = "white", label.size = 0,
              label.padding = grid::unit(0.12, "lines")) +
     scale_y_continuous(labels = function(x) paste0(round(x * 100, 1), "%")) +
     coord_cartesian(xlim = x_lim, ylim = y_lim, expand = FALSE) +
     labs(
-      title = paste0("Absolute convergence: slope ",
-                     T_02_05_num_fn(con$uncond_slope, 3)),
-      subtitle = paste0("R-squared ", T_02_05_num_fn(con$uncond_r2, 2),
-                        ". A simulated cross-section of ", par$n_countries,
-                        " economies."),
       x = expression(bold("Log income per worker at the start (" *
                             log(y[i0]) * ")")),
       y = expression(bold("Growth in output per worker (" * g[i] * ")")),
@@ -1035,7 +1021,7 @@ D_03_01_absolute_fn <- function(par) {
       )
     ) +
     T_02_01_theme_fn(grid = "none") +
-    theme(aspect.ratio = 1)
+    theme(aspect.ratio = 2 / 3)
 }
 
 ###### D_03_02: Conditional Convergence ########################################
@@ -1063,17 +1049,12 @@ D_03_02_conditional_fn <- function(par) {
              size = 3.2, hjust = 1,
              vjust = if (con$cond_slope < 0) 1.4 else -0.7,
              colour = T_01_01_palette_vec[["muted"]],
-             fill = T_01_01_palette_vec[["wash"]], label.size = 0,
+             fill = "white", label.size = 0,
              label.padding = grid::unit(0.12, "lines")) +
     T_02_02_mark_x_fn(0, expression("Predicted " * y[i0])) +
     scale_y_continuous(labels = function(x) paste0(round(x * 100, 1), "%")) +
     coord_cartesian(xlim = x_lim, ylim = y_lim, expand = FALSE) +
     labs(
-      title = paste0("Conditional convergence: slope ",
-                     T_02_05_num_fn(con$cond_slope, 3)),
-      subtitle = paste0("R-squared ", T_02_05_num_fn(con$cond_r2, 2),
-                        ". The same simulated economies, steady states held ",
-                        "fixed."),
       x = expression(bold("Initial income net of " * s ~ "and" ~ n * " (" *
                             tilde(y)[i0] * ")")),
       y = expression(bold("Growth net of " * s ~ "and" ~ n * " (" *
@@ -1085,7 +1066,7 @@ D_03_02_conditional_fn <- function(par) {
       )
     ) +
     T_02_01_theme_fn(grid = "none") +
-    theme(aspect.ratio = 1)
+    theme(aspect.ratio = 2 / 3)
 }
 
 #### D_04: Ireland's Growth Accounts ###########################################
@@ -1123,8 +1104,6 @@ D_04_01_irl_years_fn <- function(dec, from, to, lab) {
     )) +
     scale_y_continuous(labels = function(v) T_02_06_pct_fn(v, 0)) +
     labs(
-      title = paste0("Ireland's growth accounts on ", lab, ", ", from,
-                     " to ", to),
       x = NULL,
       # Two lines with atop(), so the rotated title fits the panel
       y = expression(atop(bold("Contribution to growth"),
@@ -1218,9 +1197,6 @@ D_04_02_irl_path_fn <- function(path, lab, ref = NULL) {
       "Capital and labour alone" = "22"
     )) +
     labs(
-      title = "Measured output against the inputs alone",
-      subtitle = paste0("The gap is a cumulated residual of ",
-                        T_02_06_pct_fn(gap, 1), " over the window"),
       x = NULL,
       y = expression(bold("Index of output (" * Y[t] / Y[0] %*% 100 * ")")),
       colour = NULL, linetype = NULL,
@@ -1285,8 +1261,6 @@ D_04_03_irl_mfp_fn <- function(dec, cso_rates, from, to, ref = NULL) {
     )) +
     scale_y_continuous(labels = function(v) T_02_06_pct_fn(v, 0)) +
     labs(
-      title = paste("The Solow residual against the CSO's multifactor",
-                    "productivity"),
       x = NULL,
       y = expression(bold("Annual productivity growth (" *
                             Delta * "ln" ~ A * ")")),
@@ -1339,8 +1313,6 @@ D_04_04_irl_split_fn <- function(cso, what = "mfp") {
       "Domestic and other"        = "22"
     )) +
     labs(
-      title = paste0(lab, ", foreign against domestic"),
-      subtitle = "The two halves of the Irish economy, 2000 = 100",
       x = NULL, y = ylab,
       colour = NULL, linetype = NULL,
       caption = paste(
