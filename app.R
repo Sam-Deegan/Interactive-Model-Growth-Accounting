@@ -709,7 +709,7 @@ B_03_13_ireland_df <- data.frame(
 ###### B_03_14: Version ########################################################
 # Note: Semantic version, shown in the footer; CHANGELOG.md has the history.
 
-B_03_14_version_chr <- "1.0.2"
+B_03_14_version_chr <- "1.0.3"
 
 ###### B_03_15: Source Repository ##############################################
 # Note: The GitHub repo, linked from the footer.
@@ -1429,7 +1429,8 @@ E_01_02_sidebar_lst <- sidebar(
     )
   ),
   actionButton("reset", "Reset Everything",
-               class = "btn-outline-secondary btn-sm w-100")
+               class = "btn-outline-secondary btn-sm w-100"),
+  T_07_10b_sidebarqr_fn(B_04_01_qr_src_chr)
   )
 )
 
