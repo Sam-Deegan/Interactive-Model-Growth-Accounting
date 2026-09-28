@@ -709,7 +709,7 @@ B_03_13_ireland_df <- data.frame(
 ###### B_03_14: Version ########################################################
 # Note: Semantic version, shown in the footer; CHANGELOG.md has the history.
 
-B_03_14_version_chr <- "1.0.4"
+B_03_14_version_chr <- "1.0.5"
 
 ###### B_03_15: Source Repository ##############################################
 # Note: The GitHub repo, linked from the footer.
